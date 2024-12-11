@@ -1,4 +1,4 @@
-import { Image, Palette, FileJson, FileText, Download, Check } from 'lucide-react'
+import { Image, Palette, FileJson, FileText, Download, Check, Monitor } from 'lucide-react'
 import { useState } from 'react'
 
 const Analysis = ({ colors }) => {
@@ -38,7 +38,9 @@ const Analysis = ({ colors }) => {
             <Image size={24} className="text-zinc-900 dark:text-white" />
             Website image
           </h2>
-          <div className="aspect-video bg-zinc-100 dark:bg-zinc-700 rounded-xl"></div>
+          <div className="aspect-video bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-700 dark:to-zinc-800 rounded-xl flex items-center justify-center">
+            <Monitor size={48} className="text-zinc-400 dark:text-zinc-500" />
+          </div>
         </div>
 
         {/* Color Palette */}
