@@ -7,6 +7,6 @@ export default {
   theme: {
     extend: {},
   },
-  darkMode: 'class',
+  darkMode: 'media', // Use system preference
   plugins: [],
 }
