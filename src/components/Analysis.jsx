@@ -1,7 +1,33 @@
-import { Image, Palette, FileJson, FileText, Download } from 'lucide-react'
+import { Image, Palette, FileJson, FileText, Download, Check } from 'lucide-react'
+import { useState } from 'react'
 
 const Analysis = ({ colors }) => {
   if (!colors) return null
+  
+  const [copiedIndex, setCopiedIndex] = useState(null)
+
+  const copyToClipboard = (color, index) => {
+    navigator.clipboard.writeText(color)
+    setCopiedIndex(index)
+    setTimeout(() => setCopiedIndex(null), 2000)
+  }
+
+  // Calculate if text should be light or dark based on background color
+  const getTextColor = (hexColor) => {
+    // Remove # if present
+    const hex = hexColor.replace('#', '')
+    
+    // Convert hex to RGB
+    const r = parseInt(hex.substr(0, 2), 16)
+    const g = parseInt(hex.substr(2, 2), 16)
+    const b = parseInt(hex.substr(4, 2), 16)
+    
+    // Calculate brightness
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000
+    
+    // Return white for dark backgrounds, black for light backgrounds
+    return brightness > 128 ? 'text-zinc-900' : 'text-white'
+  }
 
   return (
     <div className="grid gap-8">
@@ -25,10 +51,17 @@ const Analysis = ({ colors }) => {
             {colors.palette.map((color, index) => (
               <div
                 key={index}
-                className="aspect-square rounded-xl shadow-sm transition-transform hover:scale-105 cursor-pointer"
+                onClick={() => copyToClipboard(color, index)}
+                className="aspect-square rounded-xl shadow-sm transition-all hover:scale-105 cursor-pointer relative group"
                 style={{ backgroundColor: color }}
-                title={color}
-              />
+              >
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <div className={`font-medium ${getTextColor(color)}`}>
+                    {copiedIndex === index ? 'COPIED!' : 'COPY'}
+                  </div>
+                  <div className="absolute inset-0 bg-black/10 rounded-xl" />
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -64,7 +97,7 @@ const Analysis = ({ colors }) => {
             <FileJson size={24} className="text-zinc-900 dark:text-white" />
             Export code
           </h2>
-          <pre className="p-4 bg-zinc-100 dark:bg-zinc-700 rounded-lg overflow-x-auto text-sm dark:text-white">
+          <pre className="p-4 bg-zinc-100 dark:bg-zinc-700 rounded-lg overflow-x-auto text-md dark:text-white">
             {JSON.stringify(colors, null, 2)}
           </pre>
         </div>
