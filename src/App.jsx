@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowRight, SwatchBook } from 'lucide-react'
+import { SearchCode } from 'lucide-react'
 import ThemeToggle from './components/ThemeToggle'
 import Analysis from './components/Analysis'
 import { extractColors } from './services/api'
@@ -29,8 +29,9 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-white dark:bg-zinc-900 transition-colors duration-300 p-8">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <main className="bg-white dark:bg-zinc-900 p-8 min-h-screen transition-colors duration-300">
+      <div className="space-y-8 mx-auto max-w-6xl">
+        <h1 className='my-4 font-black text-4xl'>HueHeist</h1>
         {/* URL Input Section */}
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
@@ -38,7 +39,7 @@ function App() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="URL"
-            className="flex-1 px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
+            className="flex-1 border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 border rounded-xl dark:text-white"
             required
             disabled={loading}
           />
@@ -46,22 +47,15 @@ function App() {
           <button
             type="submit"
             disabled={loading}
-            className="px-8 py-2 rounded-xl font-medium
-              bg-white dark:bg-zinc-800 
-              text-zinc-900 dark:text-white
-              border border-zinc-300 dark:border-zinc-700
-              hover:bg-zinc-50 dark:hover:bg-zinc-700
-              disabled:opacity-50 disabled:cursor-not-allowed
-              transition-all duration-300
-              flex items-center gap-2"
+            className="flex items-center gap-2 border-zinc-300 dark:border-zinc-700 bg-white hover:bg-zinc-50 dark:hover:bg-zinc-700 dark:bg-zinc-800 disabled:opacity-50 px-8 py-2 border rounded-xl font-medium text-zinc-900 dark:text-white transition-all duration-300 disabled:cursor-not-allowed"
           >
-            <SwatchBook size={32} className="transform translate-y-[1px]" />
-            <span className="text-2xl">{loading ? 'extracting...' : 'enjoy'}</span>
+            <SearchCode size={24} className="transform translate-y-[1px]" />
+            <span className="text-2xl">{loading ? 'extracting...' : 'heist'}</span>
           </button>
         </form>
 
         {error && (
-          <div className="text-red-500 dark:text-red-400 text-center">
+          <div className="text-center text-red-500 dark:text-red-400">
             {error}
           </div>
         )}
