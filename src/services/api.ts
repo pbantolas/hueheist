@@ -15,7 +15,7 @@ export const extractColors = async ({
 	numColors = 3,
 	theme,
 	format,
-	blur_factor,
+	blur_factor = 0.4,
 }: ApiProps): Promise<ColorResponse> => {
 	try {
 		const response = await fetch(`${API_BASE_URL}/extract/url`, {
@@ -29,6 +29,7 @@ export const extractColors = async ({
 				theme,
 				format,
 				blur_factor,
+				clusterer_type: "kmeans",
 			}),
 		});
 

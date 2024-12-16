@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
 	Image,
+	Clipboard,
 	Palette,
 	FileJson,
 	FileText,
@@ -23,6 +24,7 @@ interface Color {
 const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 	const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 	const [selectedFormat, setSelectedFormat] = useState<string>("json");
+	const [isCopied, setIsCopied] = useState(false);
 
 	if (!colors) return null;
 
@@ -55,23 +57,23 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 	};
 
 	return (
-		<div className="grid gap-8">
-			<div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+		<div className="gap-8 grid">
+			<div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
 				{/* Website Image */}
-				<div className="p-6 bg-white rounded-xl shadow-sm dark:bg-zinc-800">
-					<h2 className="flex gap-2 items-center mb-4 text-xl font-medium dark:text-white">
+				<div className="bg-white dark:bg-zinc-800 shadow-sm p-6 rounded-xl">
+					<h2 className="flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
 						<Image
 							size={24}
 							className="text-zinc-900 dark:text-white"
 						/>
 						Website image
 					</h2>
-					<div className="flex overflow-hidden justify-center items-center bg-gradient-to-br rounded-xl aspect-video from-zinc-100 to-zinc-200 dark:from-zinc-700 dark:to-zinc-800">
+					<div className="flex justify-center items-center bg-gradient-to-br from-zinc-100 dark:from-zinc-700 to-zinc-200 dark:to-zinc-800 rounded-xl overflow-hidden aspect-video">
 						{screenshotUrl ? (
 							<img
 								src={screenshotUrl}
 								alt="Website screenshot"
-								className="object-cover w-full h-full"
+								className="w-full h-full object-cover"
 							/>
 						) : (
 							<Monitor
@@ -83,15 +85,15 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 				</div>
 
 				{/* Color Palette */}
-				<div className="p-6 bg-white rounded-xl shadow-sm dark:bg-zinc-800 lg:col-span-2">
-					<h2 className="flex gap-2 items-center mb-4 text-xl font-medium dark:text-white">
+				<div className="lg:col-span-2 bg-white dark:bg-zinc-800 shadow-sm p-6 rounded-xl">
+					<h2 className="flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
 						<Palette
 							size={24}
 							className="text-zinc-900 dark:text-white"
 						/>
 						Palette
 					</h2>
-					<div className="grid grid-cols-4 gap-4">
+					<div className="gap-4 grid grid-cols-4">
 						{colors.map((color, index) => {
 							const rgbString = `rgb(${color.rgb.join(",")})`;
 							return (
@@ -101,9 +103,9 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 										copyToClipboard(rgbString, index)
 									}
 									style={{ backgroundColor: rgbString }}
-									className="relative rounded-xl shadow-sm transition-all cursor-pointer aspect-square hover:scale-105 group"
+									className="relative shadow-sm rounded-xl transition-all cursor-pointer aspect-square group hover:scale-105"
 								>
-									<div className="flex absolute inset-0 justify-center items-center opacity-0 transition-all duration-300 group-hover:opacity-100">
+									<div className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
 										<div
 											className={`font-medium ${getTextColor(
 												color.rgb
@@ -113,7 +115,7 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 												? "COPIED!"
 												: "COPY"}
 										</div>
-										<div className="absolute inset-0 rounded-xl bg-black/10" />
+										<div className="absolute inset-0 bg-black/10 rounded-xl" />
 									</div>
 								</div>
 							);
@@ -123,10 +125,10 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 			</div>
 
 			{/* Export Section */}
-			<div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+			<div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
 				{/* Export Options */}
-				<div className="p-6 bg-white rounded-xl shadow-sm dark:bg-zinc-800">
-					<h2 className="flex gap-2 items-center mb-4 text-xl font-medium dark:text-white">
+				<div className="bg-white dark:bg-zinc-800 shadow-sm p-6 rounded-xl">
+					<h2 className="flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
 						<Download
 							size={24}
 							className="text-zinc-900 dark:text-white"
@@ -171,15 +173,41 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 				</div>
 
 				{/* Export Code */}
-				<div className="p-6 bg-white rounded-xl shadow-sm dark:bg-zinc-800 lg:col-span-2">
-					<h2 className="flex gap-2 items-center mb-4 text-xl font-medium dark:text-white">
+				<div className="lg:col-span-2 bg-white dark:bg-zinc-800 shadow-sm p-6 rounded-xl">
+					<h2 className="relative flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
 						<FileJson
 							size={24}
 							className="text-zinc-900 dark:text-white"
 						/>
-						Export code
+						{selectedFormat}
+						<div className="right-0 absolute flex items-center">
+							{isCopied && (
+								<span className="mr-2 text-sm text-text/80">
+									Copied!
+								</span>
+							)}
+							<button
+								onClick={() => {
+									const preElement =
+										document.querySelector("pre");
+									if (preElement) {
+										navigator.clipboard.writeText(
+											preElement.textContent || ""
+										);
+										setIsCopied(true);
+										setTimeout(
+											() => setIsCopied(false),
+											2000
+										);
+									}
+								}}
+								className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
+							>
+								<Clipboard size={20} />
+							</button>
+						</div>
 					</h2>
-					<pre className="overflow-x-auto p-4 rounded-lg bg-zinc-100 dark:bg-zinc-700 text-md dark:text-white">
+					<pre className="bg-zinc-100 dark:bg-zinc-700 p-4 rounded-lg text-md dark:text-white overflow-x-auto">
 						{JSON.stringify(
 							Object.fromEntries(
 								colors.map((color, index) => [
