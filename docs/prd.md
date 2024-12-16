@@ -1,4 +1,4 @@
-# Color Extractor - Product Requirements
+# HueHeist - Product Requirements
 
 ## Overview
 
@@ -32,3 +32,9 @@ A web-based tool that extracts and displays color palettes from websites, with a
 -   System-based dark/light mode
 -   Independent analysis section theme toggle
 -   Consistent zinc/amber color scheme
+
+### Collections System
+
+-   Save extractions to collections
+-   Tagging system (e.g., "SaaS inspiration", "Landing pages")
+-   Color preview in common UI elements

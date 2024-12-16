@@ -1,13 +1,22 @@
-const API_BASE_URL =
+import { ColorResponse } from "../types/ApiTypes";
+const API_BASE_URL: string =
 	import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+
+interface ApiProps {
+	url: string;
+	numColors?: number;
+	theme?: string;
+	format?: string;
+	blur_factor?: number;
+}
 
 export const extractColors = async ({
 	url,
-	numColors = 4,
-	theme = "light",
-	format = "json",
-	blur_factor = 0.4,
-}) => {
+	numColors = 3,
+	theme,
+	format,
+	blur_factor,
+}: ApiProps): Promise<ColorResponse> => {
 	try {
 		const response = await fetch(`${API_BASE_URL}/extract/url`, {
 			method: "POST",
