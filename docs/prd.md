@@ -18,6 +18,7 @@ A web-based tool that extracts and displays color palettes from websites, with a
     -   Shows extracted colors in a grid
     -   Click-to-copy functionality
     -   Visual feedback on copy
+-   Load more info if initiated by user with thecolorapi.com request
 
 ### Export Options
 

@@ -1,9 +1,10 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
 import { LockKeyholeOpen, LoaderCircle } from "lucide-react";
 import ThemeToggle from "./components/ThemeToggle";
 import Analysis from "./components/Analysis";
 import { extractColors } from "./services/api";
 import { ColorInfo, ColorResponse } from "./types/ApiTypes";
+import { updateFavicon } from "./utils/favicon";
 
 function App() {
 	const [url, setUrl] = useState<string>("");
@@ -12,6 +13,10 @@ function App() {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null);
+
+	useEffect(() => {
+		updateFavicon(colors);
+	}, [colors]);
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -55,14 +60,14 @@ function App() {
 							value={url}
 							onChange={(e) => setUrl(e.target.value)}
 							placeholder="Enter the Mark"
-							className="flex-1 border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 border rounded-xl dark:text-white"
+							className="flex-1 border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 border rounded-md dark:text-white"
 							required
 							disabled={loading}
 						/>
 						<button
 							type="submit"
 							disabled={loading}
-							className="flex items-center gap-2 border-zinc-300 dark:border-zinc-700 bg-white bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700 disabled:opacity-50 px-8 py-2 border rounded-xl font-medium text-zinc-900 dark:text-white transition-all duration-300 disabled:cursor-not-allowed"
+							className="flex items-center gap-2 border-zinc-300 dark:border-zinc-700 bg-action hover:bg-action-hover disabled:opacity-50 px-8 py-2 border rounded-md font-medium text-text transition-all duration-300 disabled:cursor-not-allowed"
 						>
 							{loading ? (
 								<LoaderCircle

@@ -11,9 +11,11 @@ export default {
 				primary: "rgba(var(--primary))",
 				background: "rgba(var(--background))",
 				text: "rgba(var(--text))",
+				action: "rgba(var(--action))",
+				"action-hover": "rgba(var(--action-hover))",
 			},
 			boxShadow: {
-				'glow-amber': '0 0 15px rgba(245,158,11,0.5)',
+				"glow-amber": "0 0 15px rgba(245,158,11,0.5)",
 			},
 		},
 	},

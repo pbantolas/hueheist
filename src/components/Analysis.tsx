@@ -55,88 +55,109 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 	};
 
 	return (
-		<div className="gap-8 grid">
-			<div className="gap-8 grid grid-cols-1 lg:grid-cols-3 lg:grid-flow-col lg:auto-cols-fr">
+		<div className="gap-4 grid">
+			<div className="gap-4 grid grid-cols-1 lg:grid-cols-3 lg:grid-flow-col lg:auto-cols-fr">
 				{/* Left Column */}
-				<div className="contents lg:block">
-					<div className="gap-8 grid">
-						{/* Website Image */}
-						<div className="bg-white dark:bg-zinc-800 shadow-sm p-6 rounded-xl">
-							<h2 className="flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
-								<Image
-									size={24}
-									className="text-zinc-900 dark:text-white"
-								/>
-								Surveillance Footage
-							</h2>
-							<div className="flex justify-center items-center bg-gradient-to-br from-zinc-100 dark:from-zinc-700 to-zinc-200 dark:to-zinc-800 rounded-xl overflow-hidden aspect-video">
-								{screenshotUrl ? (
-									<img
-										src={screenshotUrl}
-										alt="Website screenshot"
-										className="w-full h-full object-cover"
+				<div className="lg:block contents">
+					<div className="gap-4 grid">
+						<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-md">
+							<div>
+								{/* Website Image */}
+								<h2 className="flex items-center gap-4 mb-4 font-medium text-xl dark:text-white">
+									<Image
+										size={24}
+										className="text-zinc-900 dark:text-white"
 									/>
-								) : (
-									<Monitor
-										size={48}
-										className="text-zinc-400 dark:text-zinc-500"
-									/>
-								)}
+									Surveillance Footage
+								</h2>
+								<div className="relative flex justify-center items-center bg-gradient-to-br from-zinc-100 dark:from-zinc-700 to-zinc-200 dark:to-zinc-900 rounded-md overflow-visible aspect-video group">
+									{screenshotUrl ? (
+										<div className="group-hover:bg-black/50 z-0 absolute inset-0 transition-colors duration-300" />
+									) : null}
+									{screenshotUrl ? (
+										<img
+											src={screenshotUrl}
+											alt="Website screenshot"
+											className="group-hover:scale-150 group-hover:z-10 hover:shadow-2xl rounded-md w-full h-full transition-all group-hover:translate-x-1/4 duration-300 ease-in-out object-cover"
+										/>
+									) : (
+										<Monitor
+											size={48}
+											className="text-zinc-400 dark:text-zinc-500"
+										/>
+									)}
+								</div>
 							</div>
-						</div>
 
-						{/* Color Palette */}
-						<div className="bg-white dark:bg-zinc-800 shadow-sm p-6 rounded-xl">
-							<h2 className="flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
-								<Palette
-									size={24}
-									className="text-zinc-900 dark:text-white"
-								/>
-								Stolen Goods
-							</h2>
-							<div className="gap-4 grid grid-cols-4">
-								{colors.map((color, index) => {
-									const rgbString = `rgb(${color.rgb.join(",")})`;
-									return (
-										<div
-											key={index}
-											onClick={() =>
-												copyToClipboard(rgbString, index)
-											}
-											style={{ backgroundColor: rgbString }}
-											className="relative shadow-sm rounded-xl transition-all cursor-pointer aspect-square group hover:scale-105"
-										>
-											<div className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-												<div
-													className={`font-medium ${getTextColor(
-														color.rgb
-													)}`}
-												>
-													{copiedIndex === index
-														? "COPIED!"
-														: "COPY"}
+							<div className="mt-4">
+								<h2 className="flex items-center gap-4 mb-4 font-medium text-xl dark:text-white">
+									<Palette
+										size={24}
+										className="text-zinc-900 dark:text-white"
+									/>
+									Stolen Goods
+								</h2>
+								<div className="gap-4 grid grid-cols-4">
+									{colors.map((color, index) => {
+										const rgbString = `rgb(${color.rgb.join(
+											","
+										)})`;
+										return (
+											<div
+												key={index}
+												onClick={() =>
+													copyToClipboard(
+														rgbString,
+														index
+													)
+												}
+												style={{
+													backgroundColor: rgbString,
+												}}
+												className="relative border-gray-300 shadow-sm border rounded-xl transition-all cursor-pointer aspect-square group hover:scale-105"
+											>
+												<div className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+													<div
+														className={`font-bold text-sm ${getTextColor(
+															color.rgb
+														)}`}
+													>
+														{copiedIndex === index
+															? "COPIED!"
+															: "COPY"}
+													</div>
+													<div className="absolute inset-0 bg-black/10 rounded-xl" />
 												</div>
-												<div className="absolute inset-0 bg-black/10 rounded-xl" />
 											</div>
-										</div>
-									);
-								})}
+										);
+									})}
+								</div>
+							</div>
+
+							<div className="mt-8">
+								{/* Buttons for adding to collection */}
+								<button
+									type="button"
+									className="flex items-center bg-action hover:bg-action-hover p-3 rounded-xl text-sm text-text"
+								>
+									<Check size={20} /> Add to Booty
+								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 
 				{/* Right Column */}
-				<div className="contents lg:block col-span-2">
-					<div className="gap-8 grid">
+				<div className="lg:block col-span-2 contents">
+					<div className="gap-4 grid">
 						<ExportOptions
 							selectedFormat={selectedFormat}
 							onFormatChange={handleExportFormat}
 						/>
 
 						{/* Export Code */}
-						<div className="bg-white dark:bg-zinc-800 shadow-sm p-6 rounded-xl">
-							<h2 className="relative flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
+						<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-md">
+							<h2 className="relative flex items-center gap-4 mb-4 font-medium text-xl dark:text-white">
 								<FileJson
 									size={24}
 									className="text-zinc-900 dark:text-white"
@@ -172,13 +193,17 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 							{selectedFormat === "png" && (
 								<div className="my-4">
 									<img
-										src={formatConverters.png.convert(colors)}
+										src={formatConverters.png.convert(
+											colors
+										)}
 										alt="Color Palette"
 									/>
 								</div>
 							)}
-							<pre className="bg-zinc-100 dark:bg-zinc-700 p-4 rounded-lg max-w-full text-md dark:text-white break-all whitespace-pre-wrap overflow-x-auto">
-								{formatConverters[selectedFormat].convert(colors)}
+							<pre className="border-indigo-500 bg-zinc-100 dark:bg-indigo-400/20 p-4 border rounded-sm max-w-full text-md dark:text-white break-all whitespace-pre-wrap overflow-x-auto">
+								{formatConverters[selectedFormat].convert(
+									colors
+								)}
 							</pre>
 						</div>
 					</div>
