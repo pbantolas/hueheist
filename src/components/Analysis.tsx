@@ -149,61 +149,63 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 				{/* Right Column */}
 				<div className="lg:block col-span-2 contents">
 					<div className="gap-4 grid">
-						<ExportOptions
-							selectedFormat={selectedFormat}
-							onFormatChange={handleExportFormat}
-						/>
-
-						{/* Export Code */}
 						<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-md">
-							<h2 className="relative flex items-center gap-4 mb-4 font-medium text-xl dark:text-white">
-								<FileJson
-									size={24}
-									className="text-zinc-900 dark:text-white"
-								/>
-								{selectedFormat}
-								<div className="right-0 absolute flex items-center">
-									{isCopied && (
-										<span className="mr-2 text-sm text-text/80">
-											Copied!
-										</span>
-									)}
-									<button
-										onClick={() => {
-											const exportCode =
-												formatConverters[
-													selectedFormat
-												].convert(colors);
-											navigator.clipboard.writeText(
-												exportCode
-											);
-											setIsCopied(true);
-											setTimeout(
-												() => setIsCopied(false),
-												2000
-											);
-										}}
-										className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
-									>
-										<Clipboard size={20} />
-									</button>
-								</div>
-							</h2>
-							{selectedFormat === "png" && (
-								<div className="my-4">
-									<img
-										src={formatConverters.png.convert(
-											colors
-										)}
-										alt="Color Palette"
+							<ExportOptions
+								selectedFormat={selectedFormat}
+								onFormatChange={handleExportFormat}
+							/>
+
+							<div className="mt-8">
+								{/* Export Code */}
+								<h2 className="relative flex items-center gap-4 mb-4 font-medium text-xl dark:text-white">
+									<FileJson
+										size={24}
+										className="text-zinc-900 dark:text-white"
 									/>
-								</div>
-							)}
-							<pre className="border-indigo-500 bg-zinc-100 dark:bg-indigo-400/20 p-4 border rounded-sm max-w-full text-md dark:text-white break-all whitespace-pre-wrap overflow-x-auto">
-								{formatConverters[selectedFormat].convert(
-									colors
+									{selectedFormat}
+									<div className="right-0 absolute flex items-center">
+										{isCopied && (
+											<span className="mr-2 text-sm text-text/80">
+												Copied!
+											</span>
+										)}
+										<button
+											onClick={() => {
+												const exportCode =
+													formatConverters[
+														selectedFormat
+													].convert(colors);
+												navigator.clipboard.writeText(
+													exportCode
+												);
+												setIsCopied(true);
+												setTimeout(
+													() => setIsCopied(false),
+													2000
+												);
+											}}
+											className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
+										>
+											<Clipboard size={20} />
+										</button>
+									</div>
+								</h2>
+								{selectedFormat === "png" && (
+									<div className="my-4">
+										<img
+											src={formatConverters.png.convert(
+												colors
+											)}
+											alt="Color Palette"
+										/>
+									</div>
 								)}
-							</pre>
+								<pre className="border-indigo-500 bg-zinc-100 dark:bg-indigo-400/20 p-4 border rounded-sm max-w-full text-md dark:text-white break-all whitespace-pre-wrap overflow-x-auto">
+									{formatConverters[selectedFormat].convert(
+										colors
+									)}
+								</pre>
+							</div>
 						</div>
 					</div>
 				</div>

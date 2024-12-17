@@ -33,7 +33,7 @@ const ExportOptions: React.FC<ExportOptionsProps> = ({
 	const normalClasses = "bg-action text-text hover:bg-action-hover";
 
 	return (
-		<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-md">
+		<div>
 			<h2 className="flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
 				<Download size={24} className="text-zinc-900 dark:text-white" />
 				Getaway Plans
