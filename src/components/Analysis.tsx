@@ -10,6 +10,7 @@ import {
 	Monitor,
 } from "lucide-react";
 import { extractColors } from "../services/api";
+import { formatConverters, FormatType } from "../services/formatConverter";
 import { ColorInfo } from "../types/ApiTypes";
 
 interface AnalysisProps {
@@ -23,7 +24,7 @@ interface Color {
 
 const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 	const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-	const [selectedFormat, setSelectedFormat] = useState<string>("json");
+	const [selectedFormat, setSelectedFormat] = useState<FormatType>("json");
 	const [isCopied, setIsCopied] = useState(false);
 
 	if (!colors) return null;
@@ -34,7 +35,7 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 		setTimeout(() => setCopiedIndex(null), 2000);
 	};
 
-	const handleExportFormat = async (format: string): Promise<void> => {
+	const handleExportFormat = async (format: FormatType): Promise<void> => {
 		try {
 			setSelectedFormat(format);
 		} catch (error) {
@@ -66,7 +67,7 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 							size={24}
 							className="text-zinc-900 dark:text-white"
 						/>
-						Website image
+						Surveillance Footage
 					</h2>
 					<div className="flex justify-center items-center bg-gradient-to-br from-zinc-100 dark:from-zinc-700 to-zinc-200 dark:to-zinc-800 rounded-xl overflow-hidden aspect-video">
 						{screenshotUrl ? (
@@ -91,7 +92,7 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 							size={24}
 							className="text-zinc-900 dark:text-white"
 						/>
-						Palette
+						Stolen Goods
 					</h2>
 					<div className="gap-4 grid grid-cols-4">
 						{colors.map((color, index) => {
@@ -133,7 +134,7 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 							size={24}
 							className="text-zinc-900 dark:text-white"
 						/>
-						Export options
+						Getaway Plans
 					</h2>
 					<div className="space-y-2">
 						<button
@@ -188,18 +189,13 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 							)}
 							<button
 								onClick={() => {
-									const preElement =
-										document.querySelector("pre");
-									if (preElement) {
-										navigator.clipboard.writeText(
-											preElement.textContent || ""
-										);
-										setIsCopied(true);
-										setTimeout(
-											() => setIsCopied(false),
-											2000
-										);
-									}
+									const exportCode =
+										formatConverters[
+											selectedFormat
+										].convert(colors);
+									navigator.clipboard.writeText(exportCode);
+									setIsCopied(true);
+									setTimeout(() => setIsCopied(false), 2000);
 								}}
 								className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
 							>
@@ -207,17 +203,17 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 							</button>
 						</div>
 					</h2>
+					{selectedFormat === "png" && (
+						<div className="my-4">
+							<img
+								src={formatConverters.png.convert(colors)}
+								alt="Color Palette"
+								className="max-w-full h-auto"
+							/>
+						</div>
+					)}
 					<pre className="bg-zinc-100 dark:bg-zinc-700 p-4 rounded-lg text-md dark:text-white overflow-x-auto">
-						{JSON.stringify(
-							Object.fromEntries(
-								colors.map((color, index) => [
-									`color-${index}`,
-									color.rgb,
-								])
-							),
-							null,
-							2
-						)}
+						{formatConverters[selectedFormat].convert(colors)}
 					</pre>
 				</div>
 			</div>

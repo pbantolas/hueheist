@@ -1,5 +1,5 @@
 import React, { useState, FormEvent } from "react";
-import { SearchCode, LoaderCircle } from "lucide-react";
+import { LockKeyholeOpen, LoaderCircle } from "lucide-react";
 import ThemeToggle from "./components/ThemeToggle";
 import Analysis from "./components/Analysis";
 import { extractColors } from "./services/api";
@@ -35,9 +35,9 @@ function App() {
 	};
 
 	return (
-		<main className="overflow-x-hidden p-8 min-h-screen transition-colors duration-300 bg-background">
-			<div className="relative mx-auto space-y-8 max-w-6xl">
-				<h1 className="my-4 text-4xl font-black text-text">HueHeist</h1>
+		<main className="bg-background p-8 min-h-screen transition-colors duration-300 overflow-x-hidden">
+			<div className="relative space-y-8 mx-auto max-w-6xl">
+				<h1 className="my-4 font-black text-4xl text-text">HueHeist</h1>
 				{/* URL Input Section */}
 				<div className="relative">
 					<img
@@ -46,23 +46,23 @@ function App() {
 						className="md:block top-[75%] -left-28 xl:-left-36 absolute hidden w-28 xl:w-40 h-auto -translate-y-1/2 pointer-events-none"
 					/>
 					<form onSubmit={handleSubmit} className="flex gap-2">
-						<input
-							type="url"
-							value={url}
-							onChange={(e) => setUrl(e.target.value)}
-							placeholder="URL"
-							className="flex-1 px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white"
-							required
-							disabled={loading}
-						/>
 						<ThemeToggle
 							isDark={analysisMode}
 							onChange={setAnalysisMode}
 						/>
+						<input
+							type="url"
+							value={url}
+							onChange={(e) => setUrl(e.target.value)}
+							placeholder="Enter the Mark"
+							className="flex-1 border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 border rounded-xl dark:text-white"
+							required
+							disabled={loading}
+						/>
 						<button
 							type="submit"
 							disabled={loading}
-							className="flex gap-2 items-center px-8 py-2 font-medium bg-white rounded-xl border transition-all duration-300 bg-zinc-800 border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 disabled:opacity-50 text-zinc-900 dark:text-white disabled:cursor-not-allowed"
+							className="flex items-center gap-2 border-zinc-300 dark:border-zinc-700 bg-white bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700 disabled:opacity-50 px-8 py-2 border rounded-xl font-medium text-zinc-900 dark:text-white transition-all duration-300 disabled:cursor-not-allowed"
 						>
 							{loading ? (
 								<LoaderCircle
@@ -70,10 +70,10 @@ function App() {
 									className="animate-spin"
 								/>
 							) : (
-								<SearchCode size={24} />
+								<LockKeyholeOpen size={24} />
 							)}
 							<span className="text-2xl">
-								{loading ? "extracting..." : "heist"}
+								{loading ? "in progress..." : "crack the code"}
 							</span>
 						</button>
 					</form>
