@@ -10,6 +10,7 @@
 	--primary: 251, 191, 36;
 	--action: 220, 220, 220;
 	--action-hover: 240, 240, 240;
+	--accent: 43, 242, 225;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,5 +20,6 @@
 		--primary: 251, 191, 36;
 		--action: 30, 30, 30;
 		--action-hover: 40, 40, 40;
+		--accent: 43, 242, 225;
 	}
 }
