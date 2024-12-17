@@ -13,6 +13,7 @@ import { extractColors } from "./services/api";
 import { ColorInfo, ColorResponse } from "./types/ApiTypes";
 import { updateFavicon } from "./utils/favicon";
 import { getUserFriendlyError } from "./utils/errorMessages";
+import { trackEvent } from "./services/analytics";
 
 function useColorExtractor(navigate: NavigateFunction) {
 	const [url, setUrl] = useState<string>("");
@@ -33,14 +34,22 @@ function useColorExtractor(navigate: NavigateFunction) {
 		try {
 			setLoading(true);
 			setError(null);
+			trackEvent("extract_colors_start", { url: targetUrl, isDarkMode });
 			const response: ColorResponse = await extractColors({
 				url: targetUrl,
 				theme: isDarkMode ? "dark" : "light",
 			});
 			setColors(response.data.colors);
 			setScreenshotUrl(response.screenshot_url);
+			trackEvent("extract_colors_success", {
+				colorCount: response.data.colors.length,
+			});
 			navigate("/analysis");
 		} catch (err: unknown) {
+			trackEvent("extract_colors_error", {
+				url: targetUrl,
+				error: getUserFriendlyError(err),
+			});
 			setError(getUserFriendlyError(err));
 			setColors(null);
 		} finally {
