@@ -12,6 +12,9 @@ export default {
 				background: "rgba(var(--background))",
 				text: "rgba(var(--text))",
 			},
+			boxShadow: {
+				'glow-amber': '0 0 15px rgba(245,158,11,0.5)',
+			},
 		},
 	},
 	darkMode: "media",
