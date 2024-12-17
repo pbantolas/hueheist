@@ -17,6 +17,10 @@ export default {
 			boxShadow: {
 				"glow-amber": "0 0 15px rgba(245,158,11,0.5)",
 			},
+			backgroundImage: {
+				"pattern-fade":
+					"linear-gradient(to top, transparent 10%, rgba(var(--background), 0.5) 30%, rgb(var(--background)) 100%), url('/pattern.svg')",
+			},
 		},
 	},
 	darkMode: "media",
