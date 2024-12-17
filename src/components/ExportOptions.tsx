@@ -1,11 +1,12 @@
 import React from "react";
 import { FileText, FileJson, Image, Download } from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import { FormatType } from "../services/formatConverter";
 
-export type ExportFormat = "css" | "json" | "png";
+// export type ExportFormat = "css" | "json" | "png";
 
 interface FormatOption {
-	format: ExportFormat;
+	format: FormatType;
 	icon: LucideIcon;
 	label: string;
 }
@@ -13,12 +14,13 @@ interface FormatOption {
 const formatOptions: FormatOption[] = [
 	{ format: "css", icon: FileText, label: "CSS" },
 	{ format: "json", icon: FileJson, label: "JSON" },
+	{ format: "tailwind", icon: Image, label: "tailwind config" },
 	{ format: "png", icon: Image, label: "PNG" },
 ];
 
 interface ExportOptionsProps {
-	selectedFormat: ExportFormat;
-	onFormatChange: (format: ExportFormat) => void;
+	selectedFormat: FormatType;
+	onFormatChange: (format: FormatType) => void;
 }
 
 const ExportOptions: React.FC<ExportOptionsProps> = ({

@@ -9,9 +9,8 @@ import {
 	Check,
 	Monitor,
 } from "lucide-react";
-import ExportOptions, { ExportFormat } from "./ExportOptions";
-import { extractColors } from "../services/api";
-import { formatConverters } from "../services/formatConverter";
+import ExportOptions from "./ExportOptions";
+import { formatConverters, FormatType } from "../services/formatConverter";
 import { ColorInfo } from "../types/ApiTypes";
 
 interface AnalysisProps {
@@ -25,7 +24,7 @@ interface Color {
 
 const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 	const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-	const [selectedFormat, setSelectedFormat] = useState<ExportFormat>("css");
+	const [selectedFormat, setSelectedFormat] = useState<FormatType>("css");
 	const [isCopied, setIsCopied] = useState(false);
 
 	if (!colors) return null;
@@ -36,7 +35,7 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 		setTimeout(() => setCopiedIndex(null), 2000);
 	};
 
-	const handleExportFormat = (format: ExportFormat): void => {
+	const handleExportFormat = (format: FormatType): void => {
 		setSelectedFormat(format);
 	};
 
