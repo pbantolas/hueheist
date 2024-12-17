@@ -7,7 +7,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
 	return (
-		<div className="relative bg-background min-h-screen transition-colors duration-300 overflow-hidden">
+		<div className="relative bg-background min-h-screen transition-all duration-300 overflow-hidden ease-in-out">
 			{/* Background Pattern */}
 			<div className="absolute inset-0 w-full h-full">
 				<div className="absolute inset-0 bg-pattern-fade opacity-10" />

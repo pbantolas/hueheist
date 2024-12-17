@@ -1,7 +1,6 @@
 import React from "react";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, LockKeyholeOpen } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
-import Layout from "./Layout";
 import { examplePalettes } from "../data/examplePalettes";
 import PaletteCard from "./PaletteCard";
 
@@ -60,16 +59,21 @@ export default function LandingPage({
 					<button
 						type="submit"
 						disabled={loading}
-						className="flex items-center gap-2 border-zinc-300 dark:border-zinc-700 bg-action hover:bg-action-hover disabled:opacity-50 px-8 py-2 border rounded-md font-medium text-text transition-all duration-300 disabled:cursor-not-allowed"
+						className="border-zinc-300 dark:border-zinc-700 bg-action hover:bg-action-hover disabled:opacity-50 px-8 py-2 border rounded-md font-medium text-text transition-all duration-300 disabled:cursor-not-allowed"
 					>
-						{loading ? (
-							<>
-								<LoaderCircle className="animate-spin" />
-								Processing...
-							</>
-						) : (
-							"Extract Colors"
-						)}
+						<span className="flex gap-2 text-xl">
+							{loading ? (
+								<>
+									<LoaderCircle className="animate-spin" />
+									Processing...
+								</>
+							) : (
+								<>
+									<LockKeyholeOpen size={24} />
+									crack the code
+								</>
+							)}
+						</span>
 					</button>
 				</form>
 			</div>
@@ -126,7 +130,7 @@ export default function LandingPage({
 			<section className="py-8">
 				<div className="mx-auto max-w-6xl">
 					<h2 className="mb-8 font-bold text-3xl text-text">
-						Example Heists
+						Previous Heists
 					</h2>
 					<div className="gap-8 grid md:grid-cols-3">
 						{examplePalettes.map((palette, index) => (

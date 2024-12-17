@@ -37,7 +37,12 @@ export const extractColors = async ({
 			throw new Error("Failed to extract colors");
 		}
 
-		return await response.json();
+		const jsonResponse = await response.json();
+		// fixup screenshot url
+		jsonResponse.screenshot_url =
+			API_BASE_URL + jsonResponse.screenshot_url;
+
+		return jsonResponse;
 	} catch (error) {
 		console.error("Error extracting colors:", error);
 		throw error;
