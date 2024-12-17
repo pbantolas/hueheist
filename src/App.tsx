@@ -14,6 +14,7 @@ function App() {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null);
+	const [landingPageVisible, setLandingPageVisible] = useState<boolean>(true);
 
 	useEffect(() => {
 		updateFavicon(colors);
@@ -31,6 +32,7 @@ function App() {
 				theme: analysisMode ? "dark" : "light",
 			});
 			setColors(response.data.colors);
+			setLandingPageVisible(false);
 			setScreenshotUrl(response.screenshot_url);
 		} catch (err: unknown) {
 			setError(getUserFriendlyError(err));
@@ -58,11 +60,13 @@ function App() {
 				<div className="relative space-y-8 mx-auto max-w-6xl">
 					{/* URL Input Section */}
 					<div className="relative">
-						<img
-							src="/heist-location.png"
-							alt="Heist location hint"
-							className="top-[70px] left-[80px] absolute w-40"
-						/>
+						{landingPageVisible && (
+							<img
+								src="/heist-location.png"
+								alt="Heist location hint"
+								className="top-[70px] left-[80px] absolute w-40"
+							/>
+						)}
 						<form onSubmit={handleSubmit} className="flex gap-2">
 							<ThemeToggle
 								isDark={analysisMode}
@@ -115,51 +119,53 @@ function App() {
 				</div>
 
 				{/* how it works */}
-				<section className="py-16">
-					<div className="mx-auto max-w-6xl">
-						<h2 className="mb-8 font-bold text-3xl text-text">
-							How It Works
-						</h2>
-						<div className="gap-8 grid md:grid-cols-3">
-							<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-lg">
-								<div className="flex items-center gap-4 mb-4">
-									<span className="text-4xl">🎯</span>
-									<h3 className="font-semibold text-text text-xl">
-										Case the Joint
-									</h3>
+				{landingPageVisible && (
+					<section className="py-16">
+						<div className="mx-auto max-w-6xl">
+							<h2 className="mb-8 font-bold text-3xl text-text">
+								How It Works
+							</h2>
+							<div className="gap-8 grid md:grid-cols-3">
+								<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-lg">
+									<div className="flex items-center gap-4 mb-4">
+										<span className="text-4xl">🎯</span>
+										<h3 className="font-semibold text-text text-xl">
+											Case the Joint
+										</h3>
+									</div>
+									<p className="text-text/70">
+										Enter any URL to analyze the target's
+										color scheme
+									</p>
 								</div>
-								<p className="text-text/70">
-									Enter any URL to analyze the target's color
-									scheme
-								</p>
-							</div>
-							<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-lg">
-								<div className="flex items-center gap-4 mb-4">
-									<span className="text-4xl">🎨</span>
-									<h3 className="font-semibold text-text text-xl">
-										Execute the Heist
-									</h3>
+								<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-lg">
+									<div className="flex items-center gap-4 mb-4">
+										<span className="text-4xl">🎨</span>
+										<h3 className="font-semibold text-text text-xl">
+											Execute the Heist
+										</h3>
+									</div>
+									<p className="text-text/70">
+										Our algorithms extract the most valuable
+										colors instantly
+									</p>
 								</div>
-								<p className="text-text/70">
-									Our algorithms extract the most valuable
-									colors instantly
-								</p>
-							</div>
-							<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-lg">
-								<div className="flex items-center gap-4 mb-4">
-									<span className="text-4xl">💎</span>
-									<h3 className="font-semibold text-text text-xl">
-										Make the Escape
-									</h3>
+								<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-lg">
+									<div className="flex items-center gap-4 mb-4">
+										<span className="text-4xl">💎</span>
+										<h3 className="font-semibold text-text text-xl">
+											Make the Escape
+										</h3>
+									</div>
+									<p className="text-text/70">
+										Export your color palette in any format
+										you need
+									</p>
 								</div>
-								<p className="text-text/70">
-									Export your color palette in any format you
-									need
-								</p>
 							</div>
 						</div>
-					</div>
-				</section>
+					</section>
+				)}
 			</main>
 		</>
 	);
