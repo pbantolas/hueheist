@@ -33,12 +33,10 @@ export default function Layout({ children }: LayoutProps) {
 						href="https://x.com/pbantolas"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="flex items-center gap-2 border-accent bg-background/20 hover:bg-accent backdrop-blur-sm px-4 py-2 border rounded-full transition-colors duration-300"
+						className="flex items-center gap-2 border-accent bg-background/20 hover:bg-accent backdrop-blur-sm px-4 py-2 border rounded-full text-text/80 transition-colors duration-300"
 					>
-						<span className="text-sm text-text/60">
-							made by petros
-						</span>
-						<Send size={16} className="text-text/60" />
+						<span className="text-sm">made by petros</span>
+						<Send size={16} />
 					</a>
 				</footer>
 			</div>
