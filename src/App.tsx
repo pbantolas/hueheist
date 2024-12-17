@@ -5,6 +5,7 @@ import Analysis from "./components/Analysis";
 import { extractColors } from "./services/api";
 import { ColorInfo, ColorResponse } from "./types/ApiTypes";
 import { updateFavicon } from "./utils/favicon";
+import { getUserFriendlyError } from "./utils/errorMessages";
 
 function App() {
 	const [url, setUrl] = useState<string>("");
@@ -32,7 +33,7 @@ function App() {
 			setColors(response.data.colors);
 			setScreenshotUrl(response.screenshot_url);
 		} catch (err: unknown) {
-			setError(err instanceof Error ? err.message : String(err));
+			setError(getUserFriendlyError(err));
 			setColors(null);
 		} finally {
 			setLoading(false);

@@ -62,13 +62,15 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 						<div className="bg-white dark:bg-zinc-900 shadow-sm p-6 rounded-md">
 							<div>
 								{/* Website Image */}
-								<h2 className="flex items-center gap-4 mb-4 font-medium text-xl dark:text-white">
-									<Image
-										size={24}
-										className="text-zinc-900 dark:text-white"
-									/>
-									Surveillance Footage
-								</h2>
+								<div className="relative flex items-center gap-4 mb-4">
+									<div className="flex items-center gap-4 font-medium text-xl dark:text-white">
+										<Image
+											size={24}
+											className="text-zinc-900 dark:text-white"
+										/>
+										Surveillance Footage
+									</div>
+								</div>
 								<div className="relative flex justify-center items-center bg-gradient-to-br from-zinc-100 dark:from-zinc-700 to-zinc-200 dark:to-zinc-900 rounded-md overflow-visible aspect-video group">
 									{screenshotUrl ? (
 										<div className="group-hover:bg-black/50 z-0 absolute inset-0 transition-colors duration-300" />
@@ -89,13 +91,15 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 							</div>
 
 							<div className="mt-4">
-								<h2 className="flex items-center gap-4 mb-4 font-medium text-xl dark:text-white">
-									<Palette
-										size={24}
-										className="text-zinc-900 dark:text-white"
-									/>
-									Stolen Goods
-								</h2>
+								<div className="relative flex items-center gap-4 mb-4">
+									<div className="flex items-center gap-4 font-medium text-xl dark:text-white">
+										<Palette
+											size={24}
+											className="text-zinc-900 dark:text-white"
+										/>
+										Stolen Goods
+									</div>
+								</div>
 								<div className="gap-4 grid grid-cols-4">
 									{colors.map((color, index) => {
 										const rgbString = `rgb(${color.rgb.join(
@@ -157,12 +161,14 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 
 							<div className="mt-8">
 								{/* Export Code */}
-								<h2 className="relative flex items-center gap-4 mb-4 font-medium text-xl dark:text-white">
-									<FileJson
-										size={24}
-										className="text-zinc-900 dark:text-white"
-									/>
-									{selectedFormat}
+								<div className="relative flex items-center gap-4 mb-4">
+									<div className="flex items-center gap-4 font-medium text-xl dark:text-white">
+										<FileJson
+											size={24}
+											className="text-zinc-900 dark:text-white"
+										/>
+										{selectedFormat}
+									</div>
 									<div className="right-0 absolute flex items-center">
 										{isCopied && (
 											<span className="mr-2 text-sm text-text/80">
@@ -189,7 +195,7 @@ const Analysis: React.FC<AnalysisProps> = ({ colors, screenshotUrl }) => {
 											<Clipboard size={20} />
 										</button>
 									</div>
-								</h2>
+								</div>
 								{selectedFormat === "png" && (
 									<div className="my-4">
 										<img

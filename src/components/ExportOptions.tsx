@@ -34,10 +34,12 @@ const ExportOptions: React.FC<ExportOptionsProps> = ({
 
 	return (
 		<div>
-			<h2 className="flex items-center gap-2 mb-4 font-medium text-xl dark:text-white">
-				<Download size={24} className="text-zinc-900 dark:text-white" />
-				Getaway Plans
-			</h2>
+			<div className="relative flex items-center gap-4 mb-4">
+				<div className="flex items-center gap-4 font-medium text-xl dark:text-white">
+					<Download size={24} className="text-zinc-900 dark:text-white" />
+					Getaway Plans
+				</div>
+			</div>
 			<div className="flex flex-wrap gap-2">
 				{formatOptions.map(({ format, icon: Icon, label }) => (
 					<button
