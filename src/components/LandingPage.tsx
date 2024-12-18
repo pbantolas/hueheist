@@ -40,9 +40,12 @@ export default function LandingPage({
 				<img
 					src="/heist-location.png"
 					alt="Heist location hint"
-					className="top-[70px] left-[80px] absolute w-40"
+					className="hidden sm:block top-[70px] left-[80px] absolute w-40"
 				/>
-				<form onSubmit={onSubmit} className="flex gap-2">
+				<form
+					onSubmit={onSubmit}
+					className="flex sm:flex-row flex-col gap-2"
+				>
 					<ThemeToggle
 						isDark={analysisMode}
 						onChange={onAnalysisModeChange}
@@ -52,16 +55,16 @@ export default function LandingPage({
 						value={url}
 						onChange={(e) => onUrlChange(e.target.value)}
 						placeholder="Enter the Mark (e.g. https://dribbble.com)"
-						className="flex-1 border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 border rounded-md dark:text-white"
+						className="sm:flex-1 border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 border rounded-md w-full dark:text-white"
 						required
 						disabled={loading}
 					/>
 					<button
 						type="submit"
 						disabled={loading}
-						className="border-zinc-300 dark:border-zinc-700 bg-action hover:bg-action-hover disabled:opacity-50 px-8 py-2 border rounded-md font-medium text-text transition-all duration-300 disabled:cursor-not-allowed"
+						className="border-zinc-300 dark:border-zinc-700 bg-action hover:bg-action-hover disabled:opacity-50 px-8 py-2 border rounded-md w-full sm:w-auto font-medium text-text transition-all duration-300 disabled:cursor-not-allowed"
 					>
-						<span className="flex gap-2 text-xl">
+						<span className="flex justify-center gap-2 text-xl">
 							{loading ? (
 								<>
 									<LoaderCircle className="animate-spin" />
