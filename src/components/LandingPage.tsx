@@ -83,7 +83,6 @@ export default function LandingPage({
 				</form>
 			</div>
 
-
 			{/* How it works section */}
 			<section className="py-8">
 				<div className="mx-auto max-w-6xl">
@@ -99,8 +98,11 @@ export default function LandingPage({
 								</h3>
 							</div>
 							<p className="text-text/70">
-								Enter any URL to analyze the target's color
-								scheme
+								Enter any website URL to analyze its color
+								scheme. Our tool supports modern websites,
+								landing pages, and web applications. Get instant
+								access to professional color palettes used by
+								leading brands.
 							</p>
 						</div>
 						<div className="bg-white/50 dark:bg-zinc-900/50 shadow-sm backdrop-blur p-6 rounded-lg">
@@ -111,8 +113,9 @@ export default function LandingPage({
 								</h3>
 							</div>
 							<p className="text-text/70">
-								Our algorithms extract the most valuable colors
-								instantly
+								Our advanced color extraction algorithms analyze
+								the website and identify primary, secondary, and
+								accent colors.
 							</p>
 						</div>
 						<div className="bg-white/50 dark:bg-zinc-900/50 shadow-sm backdrop-blur p-6 rounded-lg">
@@ -123,7 +126,11 @@ export default function LandingPage({
 								</h3>
 							</div>
 							<p className="text-text/70">
-								Export your color palette in any format you need
+								Export your color palette in multiple
+								developer-friendly formats including CSS
+								variables, Tailwind config, JSON, or
+								downloadable PNG swatches. Perfect for design
+								systems and brand guidelines.
 							</p>
 						</div>
 					</div>
