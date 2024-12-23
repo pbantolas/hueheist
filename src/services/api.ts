@@ -7,7 +7,6 @@ interface ApiProps {
 	numColors?: number;
 	theme?: string;
 	format?: string;
-	blur_factor?: number;
 }
 
 export const extractColors = async ({
@@ -15,7 +14,6 @@ export const extractColors = async ({
 	numColors = 3,
 	theme,
 	format,
-	blur_factor = 0.4,
 }: ApiProps): Promise<ColorResponse> => {
 	try {
 		const response = await fetch(`${API_BASE_URL}/extract/url`, {
@@ -28,8 +26,7 @@ export const extractColors = async ({
 				num_colors: numColors,
 				theme,
 				format,
-				blur_factor,
-				clusterer_type: "kmeans",
+				algorithm: "simple",
 			}),
 		});
 

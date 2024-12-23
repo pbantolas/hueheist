@@ -40,7 +40,7 @@ export default function LandingPage({
 				<img
 					src="/heist-location.png"
 					alt="Heist location hint"
-					className="hidden sm:block top-[70px] left-[80px] absolute w-40"
+					className="sm:block top-[70px] left-[80px] absolute hidden w-40"
 				/>
 				<form
 					onSubmit={onSubmit}
@@ -51,13 +51,15 @@ export default function LandingPage({
 						onChange={onAnalysisModeChange}
 					/>
 					<input
-						type="url"
+						type="text"
 						value={url}
 						onChange={(e) => onUrlChange(e.target.value)}
 						placeholder="Enter the Mark (e.g. https://dribbble.com)"
 						className="sm:flex-1 border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 px-4 py-2 border rounded-md w-full dark:text-white"
 						required
 						disabled={loading}
+						aria-invalid={error ? "true" : "false"}
+						aria-describedby={error ? "url-error" : undefined}
 					/>
 					<button
 						type="submit"
@@ -81,7 +83,6 @@ export default function LandingPage({
 				</form>
 			</div>
 
-			{error && <div className="mt-2 text-red-500 text-sm">{error}</div>}
 
 			{/* How it works section */}
 			<section className="py-8">

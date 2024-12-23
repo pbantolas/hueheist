@@ -14,6 +14,8 @@ import { ColorInfo, ColorResponse } from "./types/ApiTypes";
 import { updateFavicon } from "./utils/favicon";
 import { getUserFriendlyError } from "./utils/errorMessages";
 import { trackEvent } from "./services/analytics";
+import { validateUrl } from "./utils/urlValidation";
+import { toast } from "react-toastify";
 
 function useColorExtractor(navigate: NavigateFunction) {
 	const [url, setUrl] = useState<string>("");
@@ -46,11 +48,13 @@ function useColorExtractor(navigate: NavigateFunction) {
 			});
 			navigate("/analysis");
 		} catch (err: unknown) {
+			const friendlyError = getUserFriendlyError(err);
 			trackEvent("extract_colors_error", {
 				url: targetUrl,
-				error: getUserFriendlyError(err),
+				error: friendlyError,
 			});
-			setError(getUserFriendlyError(err));
+			toast.error(friendlyError);
+			setError(friendlyError);
 			setColors(null);
 		} finally {
 			setLoading(false);
@@ -63,6 +67,7 @@ function useColorExtractor(navigate: NavigateFunction) {
 		colors,
 		loading,
 		error,
+		setError,
 		analysisMode,
 		setAnalysisMode,
 		screenshotUrl,
@@ -78,16 +83,45 @@ function AppContent() {
 		colors,
 		loading,
 		error,
+		setError,
 		analysisMode,
 		setAnalysisMode,
 		screenshotUrl,
 		handleExtractColors,
 	} = useColorExtractor(navigate);
 
+	const handleUrlChange = (newUrl: string) => {
+		setUrl(newUrl);
+		if (!newUrl) {
+			setError(null);
+			return;
+		}
+		const validation = validateUrl(newUrl);
+		if (!validation.isValid) {
+			setError(validation.error);
+		} else {
+			setError(null);
+		}
+	};
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!url) return;
-		await handleExtractColors(url, analysisMode);
+
+		const validation = validateUrl(url);
+		if (!validation.isValid) {
+			toast.error(validation.error);
+			setError(validation.error);
+			return;
+		}
+
+		try {
+			await handleExtractColors(url, analysisMode);
+		} catch (err) {
+			toast.error(
+				error || "An error occurred while processing your request"
+			);
+		}
 	};
 
 	const sharedProps = {
@@ -95,7 +129,7 @@ function AppContent() {
 		loading,
 		analysisMode,
 		error,
-		onUrlChange: setUrl,
+		onUrlChange: handleUrlChange,
 		onAnalysisModeChange: setAnalysisMode,
 		onSubmit: handleSubmit,
 	};

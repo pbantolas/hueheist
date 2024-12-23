@@ -1,5 +1,6 @@
 import React from "react";
 import { Send } from "lucide-react";
+import { ToastContainer, Zoom } from "react-toastify";
 
 interface LayoutProps {
 	children: React.ReactNode;
@@ -40,6 +41,7 @@ export default function Layout({ children }: LayoutProps) {
 					</a>
 				</footer>
 			</div>
+			<ToastContainer theme="dark" autoClose={5000} transition={Zoom} />
 		</div>
 	);
 }

@@ -31,13 +31,16 @@ export default function AnalysisPage({
 		<>
 			{/* URL Input Section */}
 			<div className="relative">
-				<form onSubmit={onSubmit} className="flex sm:flex-row flex-col gap-2">
+				<form
+					onSubmit={onSubmit}
+					className="flex sm:flex-row flex-col gap-2"
+				>
 					<ThemeToggle
 						isDark={analysisMode}
 						onChange={onAnalysisModeChange}
 					/>
 					<input
-						type="url"
+						type="text"
 						value={url}
 						onChange={(e) => onUrlChange(e.target.value)}
 						placeholder="Enter the Mark (e.g. https://dribbble.com)"
@@ -67,15 +70,9 @@ export default function AnalysisPage({
 				</form>
 			</div>
 
-			{error && <div className="mt-2 text-red-500 text-sm">{error}</div>}
-
 			{/* Force light mode and override with dark when needed */}
 			<div className={`light ${analysisMode ? "dark" : ""}`}>
-				<Analysis
-					colors={colors}
-					screenshotUrl={screenshotUrl}
-					targetUrl={url}
-				/>
+				<Analysis colors={colors} screenshotUrl={screenshotUrl} />
 			</div>
 		</>
 	);
